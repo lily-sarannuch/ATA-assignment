@@ -7,6 +7,7 @@ export const columnName = [
     dataIndex: "account",
     key: "account",
     sorter: (a, b) => a.account - b.account,
+    render: (text) => <a>{text}</a>,
   },
   {
     title: "Operation",
@@ -80,6 +81,40 @@ export const columnName = [
   {
     title: "",
     dataIndex: "",
-    render: () => <a>...</a>,
+    render: () => (
+        <a>...</a>
+    ),
+  },
+];
+
+export const mobileColumns = [
+  {
+    title: "Account",
+    dataIndex: "account",
+    key: "account",
+    sorter: (a, b) => a.account - b.account,
+  },
+  {
+    title: "Operation",
+    dataIndex: "operation",
+    key: "operation",
+    sorter: (a, b) => (a.operation > b.operation ? -1 : 1),
+  },
+  {
+    title: "Symbol",
+    dataIndex: "symbol",
+    key: "symbol",
+    sorter: (a, b) => (a.operation > b.operation ? -1 : 1),
+  },
+  {
+    title: "Status",
+    dataIndex: "status",
+    key: "status",
+    render: () => (
+      <Space size="small">
+        <HourglassTwoTone /> Waiting
+      </Space>
+    ),
+    sorter: (a, b) => (a.operation > b.operation ? -1 : 1),
   },
 ];

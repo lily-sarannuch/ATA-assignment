@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { mockOrdersData } from "../utils/mockData";
-import { columnName } from "../utils/columnData";
+import { DownOutlined } from "@ant-design/icons";
+import { columnName, mobileColumns } from "../utils/columnData";
 import {
   Button,
+  Col,
   DatePicker,
   Flex,
+  Grid,
+  Row,
   Select,
   Space,
   Table,
@@ -14,6 +18,7 @@ import axios from "axios";
 import MockAdapter from "axios-mock-adapter";
 
 const { Text } = Typography;
+const { useBreakpoint } = Grid;
 
 // Create a mock adapter instance
 const mock = new MockAdapter(axios);
@@ -26,14 +31,6 @@ const handleChange = (value) => {
 };
 
 const columns = columnName;
-const search = {
-  width: "35%",
-  height: "auto",
-};
-const filter = {
-  width: "65%",
-  height: "auto",
-};
 const inputHeader = {
   margin: 0,
   color: "#336a8f",
@@ -45,6 +42,7 @@ const OrderSearch = () => {
   const [filterInput, setFilterInput] = useState("");
   const [newDate, setNewDate] = useState("");
   const [newExpiration, setNewExpiration] = useState("");
+  const screens = useBreakpoint();
 
   const onDateChange = (date, dateString) => {
     setNewDate(dateString);
@@ -82,9 +80,9 @@ const OrderSearch = () => {
   };
 
   return (
-    <Flex vertical>
-      <Flex gap="small">
-        <Flex style={search} justify="flex-start" align="center">
+    <div>
+      <Row gutter={[4, 4]} justify="space-between" align="middle">
+        <Col xs={24} sm={12} md={8} lg={3}>
           <Space direction="vertical">
             <Typography.Title
               level={4}
@@ -99,8 +97,9 @@ const OrderSearch = () => {
               <Text strong>{data.length}</Text>
             </Space>
           </Space>
-        </Flex>
-        <Flex style={filter} justify="space-between" align="center">
+        </Col>
+
+        <Col xs={24} sm={12} md={8} lg={4}>
           <Flex align="center">
             <Text strong style={inputHeader}>
               Period
@@ -119,6 +118,9 @@ const OrderSearch = () => {
               ]}
             />
           </Flex>
+        </Col>
+
+        <Col xs={24} sm={12} md={8} lg={4}>
           <Flex align="center">
             <Text strong style={inputHeader}>
               Status
@@ -137,6 +139,9 @@ const OrderSearch = () => {
               ]}
             />
           </Flex>
+        </Col>
+
+        <Col xs={24} sm={12} md={8} lg={4}>
           <Flex align="center">
             <Text strong style={inputHeader}>
               From
@@ -147,25 +152,67 @@ const OrderSearch = () => {
               allowClear
             />
           </Flex>
+        </Col>
+
+        <Col xs={24} sm={12} md={8} lg={4}>
           <Flex align="center">
             <Text strong style={inputHeader}>
               To
             </Text>
             <DatePicker onChange={onExpirationChange} allowClear />
           </Flex>
-          <Button
-            type="primary"
-            shape="round"
-            size="large"
-            style={{ width: "12%" }}
-            onClick={onSearch}
-          >
+        </Col>
+
+        <Col xs={24} sm={12} md={8} lg={4}>
+          <Button type="primary" shape="round" size="large" onClick={onSearch}>
             Search
           </Button>
-        </Flex>
-      </Flex>
-      <Table columns={columns} dataSource={filterData()} />
-    </Flex>
+        </Col>
+      </Row>
+      <Table
+        columns={screens.xs ? mobileColumns : columns}
+        expandable={{
+          expandedRowRender: (record) => (
+            <Row justify="space-between" align="middle">
+              <Col>
+                <Flex>
+                  <Typography.Title
+                    level={5}
+                    style={{
+                      margin: 0,
+                      marginRight: "8px",
+                      color:'#2b84fd'
+                    }}
+                  >
+                    FIRST-NAME LAST-NAME ( 10103ZA - US Margin)
+                  </Typography.Title>
+                  <Button iconPosition={"end"} shape="round"  style={{color:'#2b84fd'}}>
+                    Full review details
+                  </Button>
+                </Flex>
+              </Col>
+              <Col>
+                <Button
+                  type="primary"
+                  shape="round"
+                  size={"Small"}
+                  style={{
+                    marginRight: "8px",
+                  }}
+                >
+                  ACCEPT
+                </Button>
+                <Button shape="round" danger icon={<DownOutlined />} iconPosition="end" size={"Small"}>
+                  Reject
+                </Button>
+              </Col>
+            </Row>
+            
+          ),
+        }}
+        dataSource={filterData()}
+      />
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 package com.example.filter_job_data.controller;
 import com.example.filter_job_data.dto.JobDTO;
-import com.example.filter_job_data.entity.Job;
 import com.example.filter_job_data.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -11,11 +11,11 @@ import jakarta.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Job {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(name = "timestamp")
     private String timestamp;
 
@@ -42,10 +42,10 @@ public class Job {
 
     @Column(name = "annualBonus")
     private Double annualBonus;
-    
+
     @Column(name = "annualStockValueOrBonus")
     private Double annualStockValueOrBonus;
-    
+
     @Column(name = "gender")
     private String gender;
 
